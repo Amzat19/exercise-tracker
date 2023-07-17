@@ -60,7 +60,7 @@ app.post("/api/users/:_id/exercises", async (req, res) => {
         username,
         description,
         duration,
-        date: dateValue,
+        date: dateValue.toISOString(),
       });
 
       await newExercise.save();
