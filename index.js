@@ -91,9 +91,14 @@ app.get('/api/users/:_id/logs', async (req, res) => {
     if (user) {
       let query = { user_id: userId };
 
-      // Apply date filters if both 'from' and 'to' parameters are provided
-      if (from && to) {
-        query.date = { $gte: new Date(from), $lte: new Date(to) };
+      // Apply date filters if 'from' parameter is provided
+      if (from) {
+        query.date = { $gte: new Date(from) };
+      }
+
+      // Apply date filters if 'to' parameter is provided
+      if (to) {
+        query.date = { ...query.date, $lte: new Date(to) };
       }
 
       let exercisesQuery = ExercisesModel.find(query).select("-user_id -__v");
